@@ -17,6 +17,12 @@ This project demonstrates the deployment of EC2 instances on AWS using Terraform
 ### Prerequisites
 - AWS Account
 - GitHub Account
+#### Navigate to your GitHub repository.
+- Click on Settings
+- In the left sidebar, click Secrets and variables, then click Actions
+- Click New repository secret and add the following:
+- Name: AWS_ACCESS_KEY_ID and Enter the value
+- Name: AWS_SECRET_ACCESS_KEY and Enter the value
 
 ### Setup
 1. Clone the repository:
