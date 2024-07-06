@@ -7,7 +7,6 @@ This project demonstrates the deployment of EC2 instances on AWS using Terraform
 - AWS (Amazon Web Services)
 - Terraform
 - GitHub Actions
-- Docker
 
 ## Features
 - Automated validation and deployment of Terraform code
