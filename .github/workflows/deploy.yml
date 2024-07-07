@@ -1,9 +1,10 @@
-name: Deploy to AWS using Terraform
+name: Deploy and Manage AWS EC2 Instances using Terraform
 
 on:
   push:
     branches:
       - main  # This triggers the action on push to the main branch
+  workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
   validate:
@@ -49,4 +50,46 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
+
+  start-instances:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'start'
+    steps:
+      - name: Configure AWS credentials securely
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+      
+      - name: Start EC2 Instances
+        run: aws ec2 start-instances --instance-ids <YourInstanceIDs>
+
+  stop-instances:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'stop'
+    steps:
+      - name: Configure AWS credentials securely
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+      
+      - name: Stop EC2 Instances
+        run: aws ec2 stop-instances --instance-ids <YourInstanceIDs>
+
+  terminate-instances:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'terminate'
+    steps:
+      - name: Configure AWS credentials securely
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+      
+      - name: Terminate EC2 Instances
+        run: aws ec2 terminate-instances --instance-ids <YourInstanceIDs>
 
